@@ -14,7 +14,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
-    private final Car car;
+    private Car car;
 
     @Column(name = "name")
     private String firstName;
@@ -26,7 +26,6 @@ public class User {
     private String email;
 
     public User() {
-        this.car = null;
     }
 
     public User(String firstName, String lastName, String email) {

@@ -11,29 +11,33 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
-   @Autowired
-   private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-   @Override
-   public void add(User user) {
-      sessionFactory.getCurrentSession().save(user);
-   }
+    @Autowired
+    public UserDaoImp(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-   @Override
-   @SuppressWarnings("unchecked")
-   public List<User> listUsers() {
-      String hql = "FROM User u JOIN FETCH u.car";
-      TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery(hql, User.class);
-      return query.getResultList();
-   }
+    @Override
+    public void add(User user) {
+        sessionFactory.getCurrentSession ().save (user);
+    }
 
-   @Override
-   public User getUserbyCar(String model, int series) {
-      String hql = "FROM User u JOIN FETCH u.car c WHERE c.model = :model AND c.series = :series";
-      return sessionFactory.getCurrentSession()
-              .createQuery(hql, User.class)
-              .setParameter("model", model)
-              .setParameter("series", series)
-              .uniqueResult ();
-   }
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> listUsers() {
+        String hql = "FROM User u JOIN FETCH u.car";
+        TypedQuery<User> query = sessionFactory.getCurrentSession ().createQuery (hql, User.class);
+        return query.getResultList ();
+    }
+
+    @Override
+    public User getUserbyCar(String model, int series) {
+        String hql = "FROM User u JOIN FETCH u.car c WHERE c.model = :model AND c.series = :series";
+        return sessionFactory.getCurrentSession ()
+                .createQuery (hql, User.class)
+                .setParameter ("model", model)
+                .setParameter ("series", series)
+                .uniqueResult ();
+    }
 }

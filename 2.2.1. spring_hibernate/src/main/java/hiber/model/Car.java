@@ -23,10 +23,9 @@ public class Car {
     private int series;
 
     @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
-    private final User user;
+    private User user;
 
     public Car() {
-        this.user = null;
     }
 
     public Car(String model, int series) {
